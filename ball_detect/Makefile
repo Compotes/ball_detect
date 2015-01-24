@@ -1,11 +1,10 @@
 #PORT=COM4
 PORT=/dev/ttyUSB0
-MCU=atmega16
+MCU=atmega328p
 CC=avr-gcc
 OBJCOPY=avr-objcopy
-PROJECT=blikac
-ISINT=INTERRUPT
-F_CPU=8000000UL
+PROJECT=main
+F_CPU=16000000UL
 
 # optimize for size:
 CFLAGS=-g -mmcu=$(MCU) -Wall -Wstrict-prototypes -Os -mcall-prologues
