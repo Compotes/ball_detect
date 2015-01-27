@@ -11,6 +11,7 @@
 
 volatile uint8_t portb_history = 0xFF; 
 
+
 void setup(void) {
 	//USART INITIALIZATION
 	UCSR0A = 0;
@@ -24,7 +25,12 @@ void setup(void) {
 	PCICR |= 1;
 	PCMSK0 |= 1;
 
-	// TURN ON INTERRUPTS
+	//TIMER SETUP
+	TCCR1A = 0;
+	TCCR1B |= 1;
+	TCNT1H = 0;
+
+	//TURN ON INTERRUPTS
 	sei();
 }
 
@@ -47,7 +53,7 @@ ISR(PCINT0_vect) {
     } else if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 		
 	}
-
+k88888888
 }
 
 int main(void) {

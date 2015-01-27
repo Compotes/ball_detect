@@ -118,7 +118,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x116
+.text           0x0000000000000000      0x128
  *(.vectors)
  .vectors       0x0000000000000000       0x68 /usr/lib/gcc/avr/4.8.2/../../../avr/lib/avr5/crtm328p.o
                 0x0000000000000000                __vectors
@@ -196,47 +196,47 @@ END GROUP
                 0x0000000000000092                __vector_10
                 0x0000000000000092                __vector_16
                 0x0000000000000092                __vector_20
- .text          0x0000000000000096       0x72 main.o
+ .text          0x0000000000000096       0x84 main.o
                 0x0000000000000096                setup
-                0x00000000000000d0                __vector_18
-                0x00000000000000e4                __vector_3
- .text          0x0000000000000108        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
- .text          0x0000000000000108        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
-                0x0000000000000108                . = ALIGN (0x2)
+                0x00000000000000e2                __vector_18
+                0x00000000000000f6                __vector_3
+ .text          0x000000000000011a        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+ .text          0x000000000000011a        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x000000000000011a                . = ALIGN (0x2)
  *(.text.*)
- .text.startup  0x0000000000000108        0xa main.o
-                0x0000000000000108                main
+ .text.startup  0x000000000000011a        0xa main.o
+                0x000000000000011a                main
  .text.libgcc.mul
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.div
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
- .text.libgcc   0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  .text.libgcc.mul
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.div
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
- .text.libgcc   0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.prologue
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.builtins
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fmul
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fixed
-                0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
-                0x0000000000000112                . = ALIGN (0x2)
+                0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000124                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000000000000112        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
-                0x0000000000000112                exit
-                0x0000000000000112                _exit
+ .fini9         0x0000000000000124        0x0 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+                0x0000000000000124                exit
+                0x0000000000000124                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -255,11 +255,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000000000000112        0x4 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
+ .fini0         0x0000000000000124        0x4 /usr/lib/gcc/avr/4.8.2/avr5/libgcc.a(_exit.o)
  *(.fini0)
-                0x0000000000000116                _etext = .
+                0x0000000000000128                _etext = .
 
-.data           0x0000000000800100        0x2 load address 0x0000000000000116
+.data           0x0000000000800100        0x2 load address 0x0000000000000128
                 0x0000000000800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x0000000000800100        0x0 /usr/lib/gcc/avr/4.8.2/../../../avr/lib/avr5/crtm328p.o
@@ -286,8 +286,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x0000000000800102                PROVIDE (__bss_end, .)
-                0x0000000000000116                __data_load_start = LOADADDR (.data)
-                0x0000000000000118                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000000000000128                __data_load_start = LOADADDR (.data)
+                0x000000000000012a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0000000000800102        0x0
                 0x0000000000800102                PROVIDE (__noinit_start, .)
@@ -315,11 +315,11 @@ END GROUP
 .user_signatures
  *(.user_signatures*)
 
-.stab           0x0000000000000000      0xcf0
+.stab           0x0000000000000000      0xd14
  *(.stab)
  .stab          0x0000000000000000      0x6cc /usr/lib/gcc/avr/4.8.2/../../../avr/lib/avr5/crtm328p.o
- .stab          0x00000000000006cc      0x624 main.o
-                                        0x630 (size before relaxing)
+ .stab          0x00000000000006cc      0x648 main.o
+                                        0x654 (size before relaxing)
 
 .stabstr        0x0000000000000000      0xc53
  *(.stabstr)
