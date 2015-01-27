@@ -53,7 +53,6 @@ ISR(PCINT0_vect) {
     } else if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 		
 	}
-k88888888
 }
 
 int main(void) {
