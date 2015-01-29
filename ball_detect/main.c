@@ -31,7 +31,7 @@ void setup(void) {
 	//TIMER SETUP
 	TCCR1A = 0;
 	TCCR1B = 2 << CS10;
-	TCNT1H = 0;
+	TCNT1 = 0;
 
 	//TURN ON INTERRUPTS
 	sei();
@@ -66,7 +66,7 @@ ISR(PCINT0_vect) {
 					pulses[ct] = pulses[ct]/10;
    	     		}  			    	 	
 			} else {
-				pulse = TCNT1H;
+				pulse = TCNT1;
 				if(pulse < helper[ct]) {
 					pulses[ct] += pulse+2000000-helper[ct];
 					helper[ct] = 0;
@@ -93,20 +93,20 @@ void sendc(uint8_t ch) {
 int main(void) {
 	uint8_t i;
 	setup();
-
+	int x, j, y;
 	i = 0;
 	while (1) {
+	    x = pulses[i] / 2;
+	    y = 10000;
 		sendc(i + '0');
-		sendc(' ');
-		sendc('0' + ((pulses[i]/2 / 10000) % 10));
-		sendc('0' + ((pulses[i]/2 /  1000) % 10));
-		sendc('0' + ((pulses[i]/2 /   100) % 10));
-		sendc('0' + ((pulses[i]/2 /    10) % 10));
-		sendc('0' + ((pulses[i]/2 /     1) % 10));
-		sendc('0' + TCNT1H);
+        sendc(' ');
+		for(j = 0;j < 5;j++) {
+			sendc('0' + ((x / y) % 10));
+			x %= y;
+			y /= 10;
+		}
 		sendc('\r');
-		sendc('\n');
-
+        sendc('\n');
 		i = (i + 1) & 0x3;
 	}
 
