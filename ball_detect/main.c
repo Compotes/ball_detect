@@ -53,22 +53,22 @@ ISR(PCINT0_vect) {
 	
 	changed_bits = pinstate ^ portb_history;
 	portb_history = pinstate;
-	
-#define ct pinstate
+//#define ct pinstate	
+	int ct;
 	for (ct = 0;ct < 4;ct++) {
 		if (changed_bits & (1 << ct)) {
        		if (pinstate & (1 << ct)) {
 				helper[ct] = TCNT1H; 
-		   		if(counters[ct] < 10) 
+		   		if(counters[ct] < 10) { 
 					counters[ct]++; 
-				else {
+				} else {
 	        		counters[ct] = 0;
 					pulses[ct] = pulses[ct]/10;
    	     		}  			    	 	
 			} else {
 				pulse = TCNT1H;
 				if(pulse < helper[ct]) {
-					pulses[ct] += pulse+1000000-helper[ct];
+					pulses[ct] += pulse+2000000-helper[ct];
 					helper[ct] = 0;
 				} else {
 					pulses[ct] += pulse - helper[ct];
@@ -80,7 +80,7 @@ ISR(PCINT0_vect) {
 	if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 		
 	}
-#undef ct
+//#undef ct
 }
 
 #define waitForTX() while (!(UCSR0A & 1<<UDRE0))
@@ -103,6 +103,7 @@ int main(void) {
 		sendc('0' + ((pulses[i]/2 /   100) % 10));
 		sendc('0' + ((pulses[i]/2 /    10) % 10));
 		sendc('0' + ((pulses[i]/2 /     1) % 10));
+		sendc('0' + TCNT1H);
 		sendc('\r');
 		sendc('\n');
 
