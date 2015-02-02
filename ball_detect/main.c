@@ -50,10 +50,8 @@ ISR(PCINT0_vect) {
 
 	pinstate = PINB;
 	PORTD ^= 1 << 3;
-	
 	changed_bits = pinstate ^ portb_history;
-	portb_history = pinstate;
-//#define ct pinstate	
+	portb_history = pinstate;  
 	int ct;
 	for (ct = 0;ct < 4;ct++) {
 		if (changed_bits & (1 << ct)) {
@@ -80,7 +78,7 @@ ISR(PCINT0_vect) {
 	if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 		
 	}
-//#undef ct
+
 }
 
 #define waitForTX() while (!(UCSR0A & 1<<UDRE0))
@@ -93,7 +91,7 @@ void sendc(uint8_t ch) {
 int main(void) {
 	uint8_t i;
 	setup();
-	int x, j, y;
+ 	int x, j, y;
 	i = 0;
 	while (1) {
 	    x = pulses[i] / 2;
@@ -112,3 +110,17 @@ int main(void) {
 
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
