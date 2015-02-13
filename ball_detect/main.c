@@ -38,10 +38,8 @@ void setup(void) {
 	DDRD |= 1 << 3;	
 
 	//DIP-SWITCH INITIALIZATION
-    DDRC = 0;
-	PORTC |= \
-		((1 << DIP_SWITCH_1) | (1 << DIP_SWITCH_2) | (1 << DIP_SWITCH_3) | \
-		 (1 << DIP_SWITCH_4) | (1 << DIP_SWITCH_5) | (1 << DIP_SWITCH_6));	
+	DDRC = 0;
+	PORTC |= ((1 << DIP_SWITCH_1) | (1 << DIP_SWITCH_2) | (1 << DIP_SWITCH_3) | (1 << DIP_SWITCH_4) | (1 << DIP_SWITCH_5) | (1 << DIP_SWITCH_6));	
 	
 	//INTERRUPTS INIT
 	DDRB = 0;
@@ -79,10 +77,10 @@ ISR(USART_RX_vect) {
 	uint32_t modulo, position;
 	uint8_t read_char = UDR0, i, j;
 	if(read_char == my_address) {
-		for(j = 2; j <= 0; j--) {	
+		for(j = 2; j >= 0; j--) {	
 			modulo = vision_result[j];
 			position = 1000000;
-			for(i = 0;i < 7;i++) {
+			for(i = 0; i < 7; i++) {
 				sendc('0' + ((modulo / position) % 10));
 				modulo %= position;
 				position /= 10;
