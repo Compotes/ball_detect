@@ -39,11 +39,19 @@ void setup(void) {
 
 	//DIP-SWITCH INITIALIZATION
 	DDRC = 0;
-	PORTC |= ((1 << DIP_SWITCH_1) | (1 << DIP_SWITCH_2) | (1 << DIP_SWITCH_3) | (1 << DIP_SWITCH_4) | (1 << DIP_SWITCH_5) | (1 << DIP_SWITCH_6));	
+	PORTC |= ((1 << DIP_SWITCH_1)
+			 | (1 << DIP_SWITCH_2)
+			 | (1 << DIP_SWITCH_3)
+			 | (1 << DIP_SWITCH_4)
+			 | (1 << DIP_SWITCH_5)
+			 | (1 << DIP_SWITCH_6));	
 	
 	//INTERRUPTS INIT
 	DDRB = 0;
-	PORTB |= ((1 << BALL_SENSOR_1) | (1 << BALL_SENSOR_2) | (1 << BALL_SENSOR_3) | (1 << ULTRASONIC_SENSOR)); 
+	PORTB |= ((1 << BALL_SENSOR_1)
+			 | (1 << BALL_SENSOR_2)
+			 | (1 << BALL_SENSOR_3)
+			 | (1 << ULTRASONIC_SENSOR)); 
 	PCICR |= 1;
 	PCMSK0 |= 0xF;
 
