@@ -23,7 +23,7 @@
 volatile int32_t ends_of_pulses[4];
 volatile int32_t lenghts_of_pulses[4];
 volatile int32_t starts_of_pulses[4]; 
-volatile int32_t vision_result[3] = {0,0,0};
+volatile int32_t vision_result[3];
 volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address;
 
 void setup(void) {
