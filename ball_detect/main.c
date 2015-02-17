@@ -85,16 +85,30 @@ ISR(USART_RX_vect) {
 	uint32_t modulo, position;
 	uint8_t read_char = UDR0, i, j;
 	if(read_char == my_address) {
-		for(j = 2; j >= 0; j--) {	
+		for(j = 0; j < 3; j++) {	
 			modulo = vision_result[j];
 			position = 1000000;
+			for(i = 0; i < 7; i++) {
+				sendc((modulo / position) % 10);
+				modulo %= position;
+				position /= 10;
+			}
+		}
+	} else if((read_char - 48) == my_address) {
+			for(j = 0; j < 3; j++) { 
+			modulo = vision_result[j];
+			position = 1000000;
+			sendc('0' + j);
+			sendc(' ');
 			for(i = 0; i < 7; i++) {
 				sendc('0' + ((modulo / position) % 10));
 				modulo %= position;
 				position /= 10;
 			}
+			sendc('\r');
+			sendc('\n');
 		}
-	} 		
+	}		
 }
 
 ISR(PCINT0_vect) {
