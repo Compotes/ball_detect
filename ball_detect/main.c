@@ -89,7 +89,7 @@ ISR(USART_RX_vect) {
 			modulo = vision_result[j];
 			position = 1000000;
 			for(i = 0; i < 7; i++) {
-				sendc('0' + ((modulo / position) % 10));
+				sendc((modulo / position) % 10);
 				modulo %= position;
 				position /= 10;
 			}
@@ -107,7 +107,8 @@ ISR(PCINT0_vect) {
 				starts_of_pulses[ct] = TCNT1; 
 			} else {
 				ends_of_pulses[ct] = TCNT1;
-				lenghts_of_pulses[ct] = abs(ends_of_pulses[ct] - starts_of_pulses[ct]);
+				lenghts_of_pulses[ct] = abs(ends_of_pulses[ct] -
+											starts_of_pulses[ct]);
 			}
 		}
     }
