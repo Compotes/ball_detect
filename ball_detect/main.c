@@ -82,18 +82,19 @@ void sendc(uint8_t ch) {
 
 ISR(USART_RX_vect) {	
 	PORTD ^= 1 << 3;
-	uint32_t modulo, position;
-	uint8_t read_char = UDR0, i, j;
+	uint32_t now = 0, small = 9999999, index = 0;
+	uint8_t read_char = UDR0, j,  message = 0;
 	if(read_char == my_address) {
-		for(j = 2; j >= 0; j--) {	
-			modulo = vision_result[j];
-			position = 1000000;
-			for(i = 0; i < 7; i++) {
-				sendc((modulo / position) % 10);
-				modulo %= position;
-				position /= 10;
+		for(j = 0; j < 3; j++) {	
+			if(small > vision_result[j]) { 
+				small = vision_result[j];
+				now = vision_result[j];
+				index = j;
 			}
 		}
+		message = (index << 6);
+		message |= now/(2 << 7);
+		sendc(message);
 	} 		
 }
 
