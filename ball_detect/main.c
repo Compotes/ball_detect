@@ -24,7 +24,8 @@ volatile int32_t ends_of_pulses[4];
 volatile int32_t lenghts_of_pulses[4];
 volatile int32_t starts_of_pulses[4]; 
 volatile int32_t vision_result[3];
-volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address;
+volatile uint32_t now;
+volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address, address_of_message = 1;
 
 void setup(void) {
 	//USART INITIALIZATION
@@ -76,25 +77,33 @@ void setup(void) {
 }
 
 void sendc(uint8_t ch) {
-  waitForTX();
-  UDR0 = ch;
+	waitForTX();
+	UDR0 = ch;
 }
 
 ISR(USART_RX_vect) {	
 	PORTD ^= 1 << 3;
-	uint32_t now = 0, small = 9999999, index = 0;
+	uint32_t small = 9999999, index = 0;
 	uint8_t read_char = UDR0, j,  message = 0;
 	if(read_char == my_address) {
-		for(j = 0; j < 3; j++) {	
-			if(small > vision_result[j]) { 
-				small = vision_result[j];
-				now = vision_result[j];
-				index = j;
+		if(address_of_message == 1) {
+			for(j = 0; j < 3; j++) {	
+				if(small > vision_result[j]) { 
+					small = vision_result[j];
+					now = vision_result[j];
+					index = j;
+				}
 			}
+			message |= (index << 6);
+			message |= (now & 0b111111);
+			now >>= 6;
+			address_of_message = 2;
+			sendc(message);
+		} else {
+			address_of_message = 1;
+			message = now;
+			sendc(message);	
 		}
-		message = (index << 6);
-		message |= now/(2 << 7);
-		sendc(message);
 	} 		
 }
 
@@ -104,7 +113,7 @@ ISR(PCINT0_vect) {
 	portb_history = pinstate;  
 	for (ct = 0; ct < 4; ct++) {
 		if (changed_bits & (1 << ct)) { 
-       		if (pinstate & (1 << ct)) { 
+			if (pinstate & (1 << ct)) { 
 				starts_of_pulses[ct] = TCNT1; 
 			} else {
 				ends_of_pulses[ct] = TCNT1;
@@ -112,7 +121,7 @@ ISR(PCINT0_vect) {
 											starts_of_pulses[ct]);
 			}
 		}
-    }
+	}
 	if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 	}
 }
