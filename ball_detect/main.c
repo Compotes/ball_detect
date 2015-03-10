@@ -24,6 +24,9 @@ volatile int32_t ends_of_pulses[4];
 volatile int32_t lenghts_of_pulses[4];
 volatile int32_t starts_of_pulses[4]; 
 volatile int32_t vision_result[3];
+volatile int32_t sensor_values[3];
+volatile int32_t counter[3];
+volatile int32_t min[3] = {9999999, 9999999, 9999999};
 volatile uint32_t now;
 volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address, address_of_message = 1;
 
@@ -119,8 +122,20 @@ ISR(PCINT0_vect) {
 				ends_of_pulses[ct] = TCNT1;
 				lenghts_of_pulses[ct] = abs(ends_of_pulses[ct] -
 											starts_of_pulses[ct]);
+				if (counter[ct] <= 9) {
+					if (lenghts_of_pulses[ct] < min[ct]) {
+                    	min[ct] = lenghts_of_pulses[ct];
+                	}
+					sensor_values[ct] += lenghts_of_pulses[ct];
+					counter[ct]++;
+				} else {
+					vision_result[ct] = (sensor_values[ct] - min[ct]) / 9;
+					sensor_values[ct] = 0;
+					counter[ct] = 0;
+					min[ct] = 9999999;
+				}
 			}
-		}
+		} 
 	}
 	if(changed_bits & (1 << ULTRASONIC_SENSOR)) {
 	}
@@ -129,9 +144,9 @@ ISR(PCINT0_vect) {
 int main(void) {
 	setup();
 	while (1) {
-		vision_result[0] = lenghts_of_pulses[0];
-		vision_result[1] = lenghts_of_pulses[1];
-		vision_result[2] = lenghts_of_pulses[2];
+		//vision_result[0] = lenghts_of_pulses[0];
+		//vision_result[1] = lenghts_of_pulses[1];
+		//vision_result[2] = lenghts_of_pulses[2];
 	}
 	return 0;
 }
