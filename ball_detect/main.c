@@ -17,17 +17,20 @@
 #define DIP_SWITCH_5 4
 #define DIP_SWITCH_6 5
 #define F_OSC F_CPU
+#define NOT_SEEING_VALUE 32000
+#define QUANTITY_OF_SENSORS 4
 #define ULTRASONIC_SENSOR 4
+#define TIME_WITHOUT_PULSE 100000
+#define TIMER_OVERFLOW 2000000
 #define waitForTX() while (!(UCSR0A & 1<<UDRE0))
 
-volatile int32_t not_seeing[3];
-volatile int32_t ends_of_pulses[4];
-volatile int32_t lenghts_of_pulses[4];
-volatile int32_t starts_of_pulses[4]; 
-volatile int32_t vision_result[3];
-volatile int32_t sensor_values[3];
-volatile int32_t counter[3];
-volatile int32_t min[3] = {9999999, 9999999, 9999999};
+volatile int32_t not_seeing[QUANTITY_OF_SENSORS];
+volatile int32_t ends_of_pulses[QUANTITY_OF_SENSORS];
+volatile int32_t lenghts_of_pulses[QUANTITY_OF_SENSORS];
+volatile int32_t starts_of_pulses[QUANTITY_OF_SENSORS]; 
+volatile int32_t vision_result[QUANTITY_OF_SENSORS];
+volatile int32_t sensor_values[QUANTITY_OF_SENSORS];
+volatile int32_t counter[QUANTITY_OF_SENSORS];
 volatile uint32_t now;
 volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address, address_of_message = 0;
 
@@ -91,9 +94,9 @@ ISR(USART_RX_vect) {
 	if(read_char == my_address) {
 		if((address_of_message % 2) == 0) {
 			now = vision_result[address_of_message / 2];
-			message = now & 0b11111111;
+			message = now & 0xFF;
 			now >>= 8;
-			now &= 0b11111111;
+			now &= 0xFF;
 		} else {
 			message = now;
 		}
@@ -117,7 +120,7 @@ ISR(PCINT0_vect) {
 			} else {
 				ends_of_pulses[ct] = TCNT1;
 				if(ends_of_pulses[ct] < starts_of_pulses[ct]) {
-					ends_of_pulses[ct] += 2000000;
+					ends_of_pulses[ct] += TIMER_OVERFLOW;
 				}
 				lenghts_of_pulses[ct] = ends_of_pulses[ct] -
 							starts_of_pulses[ct];
@@ -135,8 +138,8 @@ int main(void) {
 	while (1) {
 		for(i = 0; i < 3; i++) {
 			not_seeing[i]++;
-			if(not_seeing[i] > 100000) {
-				lenghts_of_pulses[i] = 32000;
+			if(not_seeing[i] > TIME_WITHOUT_PULSE) {
+				lenghts_of_pulses[i] = NOT_SEEING_VALUE;
 			}
 			vision_result[i] = lenghts_of_pulses[i];
 		}
