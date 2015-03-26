@@ -120,7 +120,7 @@ ISR(PCINT0_vect) {
 					ends_of_pulses[ct] += 2000000;
 				}
 				lenghts_of_pulses[ct] = ends_of_pulses[ct] -
-										starts_of_pulses[ct];
+							starts_of_pulses[ct];
 				not_seeing[ct] = 0;
 			}
 		} 
