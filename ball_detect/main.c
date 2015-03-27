@@ -48,19 +48,19 @@ void setup(void) {
 
     //DIP-SWITCH INITIALIZATION
     DDRC = 0;
-    PORTC |= ((1 << DIP_SWITCH_1)
-        | (1 << DIP_SWITCH_2)
-        | (1 << DIP_SWITCH_3)
-        | (1 << DIP_SWITCH_4)
-        | (1 << DIP_SWITCH_5)
-        | (1 << DIP_SWITCH_6));
+    PORTC |= ((1 << DIP_SWITCH_1) |
+              (1 << DIP_SWITCH_2) |
+              (1 << DIP_SWITCH_3) |
+              (1 << DIP_SWITCH_4) |
+              (1 << DIP_SWITCH_5) |
+              (1 << DIP_SWITCH_6));
 
     //INTERRUPTS INIT
     DDRB = 0;
-    PORTB |= ((1 << BALL_SENSOR_1)
-        | (1 << BALL_SENSOR_2)
-        | (1 << BALL_SENSOR_3)
-        | (1 << ULTRASONIC_SENSOR));
+    PORTB |= ((1 << BALL_SENSOR_1) |
+              (1 << BALL_SENSOR_2) |
+              (1 << BALL_SENSOR_3) |
+              (1 << ULTRASONIC_SENSOR));
     PCICR |= 1;
     PCMSK0 |= 0xF;
 
@@ -120,7 +120,7 @@ ISR(PCINT0_vect) {
                     ends_of_pulses[ct] += TIMER_OVERFLOW;
                 }
                 lenghts_of_pulses[ct] = ends_of_pulses[ct]
-                                      -    starts_of_pulses[ct];
+                                      - starts_of_pulses[ct];
                 not_seeing[ct] = 0;
             }
         }
@@ -133,7 +133,8 @@ int main(void) {
     int i;
     setup();
     while (1) {
-        for(i = 0; i < 3; i++) {
+        // Fourth sensor is ultrasonic, so we don't want to coinsider it.
+        for(i = 0; i < QUANTITY_OF_SENSORS - 1; i++) {
             not_seeing[i]++;
             if(not_seeing[i] > TIME_WITHOUT_PULSE) {
                 lenghts_of_pulses[i] = NOT_SEEING_VALUE;
