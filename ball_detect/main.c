@@ -32,7 +32,8 @@ volatile int32_t vision_result[QUANTITY_OF_SENSORS];
 volatile int32_t sensor_values[QUANTITY_OF_SENSORS];
 volatile int32_t counter[QUANTITY_OF_SENSORS];
 volatile uint32_t now;
-volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF, my_address, address_of_message = 0;
+volatile uint8_t pinstate, ct, changed_bits, portb_history = 0xFF;
+volatile uint8_t my_address, address_of_message = 0;
 
 void setup(void) {
 	//USART INITIALIZATION
@@ -100,11 +101,7 @@ ISR(USART_RX_vect) {
 		} else {
 			message = now;
 		}
-		if(address_of_message == 5) {
-			address_of_message = 0;
-		} else {
-			address_of_message++;
-		}
+		address_of_message = (address_of_message + 1) % 6;
 		sendc(message);
 	}
 }
@@ -122,8 +119,8 @@ ISR(PCINT0_vect) {
 				if(ends_of_pulses[ct] < starts_of_pulses[ct]) {
 					ends_of_pulses[ct] += TIMER_OVERFLOW;
 				}
-				lenghts_of_pulses[ct] = ends_of_pulses[ct] -
-							starts_of_pulses[ct];
+				lenghts_of_pulses[ct] = ends_of_pulses[ct]
+									  -	starts_of_pulses[ct];
 				not_seeing[ct] = 0;
 			}
 		} 
